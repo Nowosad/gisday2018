@@ -1,6 +1,6 @@
 ---
 title: "Geocomputation with R:"
-subtitle: ""
+subtitle: "Analiza danych przestrzennych w otwartym oprogramowaniu"
 author: "Jakub Nowosad <br>https://nowosad.github.io"
 date: "GISday, 2018-11-14, Poznań"
 output:
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 
 
 ---
-class: inverse, center, middle
+class: center, middle
 <!-- # Dziękuję -->
 
 .pull-left[
@@ -36,6 +36,7 @@ Email: nowosad.jakub@gmail.com
 ## Więcej informacji:
 
 https://nowosad.github.io
+
 https://geocompr.github.io/
 
 ]
