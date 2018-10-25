@@ -19,6 +19,86 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
+# Geocomputation
+
+<!-- grass gis + arc + r -->
+
+---
+# Gecomputation with R
+
+<!-- how and why -->
+<!-- packages and posibilities -->
+
+---
+# Geocomputation with R - książka
+
+<!-- intro to the book -->
+<!-- links-->
+
+---
+class: inverse, center, middle
+# Podstawy
+
+---
+# R
+
+<!-- - R + RStudio -->
+<!-- - Simple workflow - gif? -->
+
+---
+# Dane wektorowe
+
+---
+# Dane rastrowe
+
+---
+# Tworzenie map
+
+---
+# Operacje geometryczne
+
+---
+class: inverse, center, middle
+# Dodatkowe możliwości
+
+---
+# Oprogramowanie GIS
+
+---
+# Przestrzenne uczenie maszynowe
+
+---
+# Tworzenie algorytmów przestrzennych
+
+---
+class: inverse, center, middle
+# Przykłady zastosowania
+
+---
+# Analiza transportu
+
+---
+# Analiza geomarketingowa
+
+---
+# Analiza ekologiczna
+
+---
+class: inverse, center, middle
+# Dodatkowe materiały
+
+---
+# ...
+
+---
+class: inverse, center, middle
+# Podsumowanie
+
+---
+# Podsumowanie
+
+
+
 
 ---
 class: center, middle
