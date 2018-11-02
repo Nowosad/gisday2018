@@ -56,7 +56,8 @@ knitr::kable(x = d,
 ---
 # Gecomputation with R
 
-An important feature of R (and Python) is that it is an interpreted language. This is advantageous because it enables interactive programming in a Read–Eval–Print Loop (REPL): code entered into the console is immediately executed and the result is printed, rather than waiting for the intermediate stage of compilation.
+Ważna zaletą R (czy też np. Pythona) jest bycie językiem interpretowanym.
+Jest to szczególnie istotne w analizie danych (nie tylko) przestrzennych, bo pozwala na interaktywne programowanie - kod wpisany w konsoli jest natychmiast wykonywany a wynik jest wyświetlany (nie ma konieczności czekana na kompilację kodu).
 
 Pakiety R:
 
@@ -133,16 +134,12 @@ knitr::include_graphics("figs/sf-classes.png", dpi = NA)
 library(sf)
 head(seine)
 ```
-- The geographic vector model is based on points located within a coordinate reference system (CRS). 
-- sf is a package providing a class system for geographic vector data. Not only does it supercede sp it also provides a consistent command-line interface to GEOS and GDAL, superceding rgeos and rgdal 
-- sf was largely supercedes the sp ecosystem, which comprises sp (E. Pebesma and Bivand 2018), rgdal for data read/write (Bivand, Keitt, and Rowlingson 2018) and rgeos for spatial operations (Bivand and Rundel 2018).
 
-    Fast reading and writing of data.
-    Enhanced plotting performance.
-    sf objects can be treated as data frames in most operations.
-    sf functions can be combined using %>% operator and works well with the tidyverse collection of R packages.
-    sf function names are relatively consistent and intuitive (all begin with st_).
+<!-- - Model wektorowy danych oparty jest na punktach położonych wewnątrz danego układu współrzędnych -->
 
+- Pakiet **sf** zapewnia system klas dla danych wektorowych w R
+- Dodatkowo ten pakiet wykorzystując biblioteki PROJ, GDAL oraz GEOS pozwala na tranformacje pomiędzy układami przestrzennych, wczytywanie i zapis wielu formatów danych oraz wykonywanie operacji geometryczych
+<!-- - Większość funkcji tego pakietu posiada intuicyjne nazwy zaczynające się of prefiksu `st_` -->
 ]
 
 
@@ -150,9 +147,8 @@ head(seine)
 # Dane rastrowe
 
 .lc[
-- This matrix representation avoids storing explicitly the coordinates for the four corner points (in fact it only stores one coordinate, namely the origin) of each cell corner as would be the case for rectangular vector polygons. 
-- The RasterLayer class represents the simplest form of a raster object, and consists of only one layer
-- Aside from RasterLayer, there are two additional classes: RasterBrick and RasterStack. Both can handle multiple layers, but differ regarding the number of supported file formats, type of internal representation and processing speed.
+- Pakiet **raster** zapewnia system klas dla danych rastrowych w R, składający się z prostych obiektów `RasterLayer` oraz wielowartwowych `RasterStack` oraz `RasterBrick`
+- Operacje na małych rastrach są wykonywane w pamięci RAM, a przetwarzanie większych rastrów odbywa się poprzez ich podzielenie na kawałki
 ]
 
 .rc[
@@ -437,28 +433,25 @@ moj_wynik = run_qgis(
 ---
 # Przestrzenne uczenie maszynowe
 
-.lc[
-```{r, echo=FALSE, out.width="75%"}
+- Uczenie statystyczne zajmuje się wykorzystaniem modeli statystycznych do identyfikacji wzorców w danych oraz predykcje na ich podstawie
+- W podstawowy sposób te metody można podzielić na techniki nadzorowane i nienadzrowowane
+- W tym rozdziale, za pomocą przykładu przewydywania osuwisk, pokazane jest w jaki sposób tworzyć nadzorowane modele przestrzenne oraz w jaki takie modele poprawnie walidować
+
+.pull-left[
+```{r, echo=FALSE, out.width="70%"}
 knitr::include_graphics("figs/lsl-map-1.png")
 ```
-```{r, echo=FALSE, out.width="75%"}
+]
+.pull-right[
+```{r, echo=FALSE, out.width="70%"}
 knitr::include_graphics("figs/lsl-susc-1.png")
 ```
 ]
 
 
-.rc[
-- Statistical learning is concerned with the use of statistical and computational models for identifying patterns in data and predicting from these patterns.
-- Statistical learning combines methods from statistics and machine learning and its methods can be categorized into supervised and unsupervised techniques.
-- This chapter is based on a case study: the (spatial) prediction of landslides. 
-- The models’ predictive performance will be assessed using spatial cross-validation (CV), which accounts for the fact that geographic data is special.
-]
-
-
-
 
 ---
-# Tworzenie algorytmów przestrzennych
+# Tworzenie funkcji przestrzennych
 
 - Wprowadzenie do tego czym jest skrypt, algorytm i funkcja
 - Wyjaśnienie ich tworzenia na przykładzie znajdowania centroidu poligonu:
@@ -479,30 +472,38 @@ class: inverse, center, middle
 ---
 # Analiza transportu
 
-
-
-.lc[
-```{r, echo=FALSE}
-knitr::include_graphics("figs/desire-1.png")
+.pull-left[
+```{r, echo=FALSE, out.height=550}
+knitr::include_graphics("figs/desire-1.png", dpi = NA)
 ```
 ]
 
-.rc[
-Typically, models are designed to solve a particular problem. For this reason, this chapter is based around a policy scenario, introduced in the next section, that asks: how to increase cycling in the city of Bristol? 
+.pull-right[
+- Umiejętności tworzenia analiz przestrzennych mogą (powinny?) służyć rozwiązywaniom prawdziwych problemów.
+- Książka zawiera trzy praktyczne przykłady - analizę transportu, geomarketingową oraz ekologiczną.
+- Analiza transportu: w jaki sposób zwiększyć udział ruchu rowerowego w mieście Bristol?
+- Taka analiza obejmuje:
 
-This chapter introduces the geographic analysis of transport systems at different geographic levels, including:
+    - Jednostki powierzchniowe
+    - Linie celu
+    - Trasy
+    - Węzły
+    - Sieci transportowe
 
--    Areal units: transport patterns can be understood with reference to zonal aggregates such as the main mode of travel (by car, bike or foot, for example) and average distance of trips made by people living in a particular zone, covered in section 12.3.
--    Desire lines: straight lines that represent ‘origin-destination’ data that records how many people travel (or could travel) between places (points or zones) in geographic space, the topic of section 12.4.
--    Routes: these are lines representing a path along the route network along the desire lines defined in the previous bullet point. We will see how to create them in section 12.5.
--    Nodes: these are points in the transport system that can represent common origins and destinations and public transport stations such as bus stops and rail stations, the topic of section 12.6.
--    Route networks: these represent the system of roads, paths and other linear features in an area and are covered in section 12.7. They can be represented as geographic features (representing route segments) or structured as an interconnected graph, with the level of traffic on different segments referred to as ‘flow’ by transport modelers (Hollander 2016).
-
+<!-- -    Areal units: transport patterns can be understood with reference to zonal aggregates such as the main mode of travel (by car, bike or foot, for example) and average distance of trips made by people living in a particular zone, covered in section 12.3. -->
+<!-- -    Desire lines: straight lines that represent ‘origin-destination’ data that records how many people travel (or could travel) between places (points or zones) in geographic space, the topic of section 12.4. -->
+<!-- -    Routes: these are lines representing a path along the route network along the desire lines defined in the previous bullet point. We will see how to create them in section 12.5. -->
+<!-- -    Nodes: these are points in the transport system that can represent common origins and destinations and public transport stations such as bus stops and rail stations, the topic of section 12.6. -->
+<!-- -    Route networks: these represent the system of roads, paths and other linear features in an area and are covered in section 12.7. They can be represented as geographic features (representing route segments) or structured as an interconnected graph, with the level of traffic on different segments referred to as ‘flow’ by transport modelers (Hollander 2016). -->
 ]
 
 
 ---
 # Analiza geomarketingowa
+
+- Przykładem analizy geomarketingowej jest określenie lokalizacji nowego sklepu, która zachęci jak najwięcej klientów i w efekcie da największy zysk.
+- Te techniki mogą być też użyte do niekomercyjnych celów, np. lokalizacji placówek służby zdrowia.
+- Typowe pytania zadawane w trakcie takiej analizy to, między innymi, jaka jest grupa docelowa i gdzie ona mieszka/często przebywa; gdzie zlokalizowana jest potencjalna konkurencja? 
 
 <!-- - A typical example is where to locate a new shop. The aim here is to attract most visitors and, ultimately, make most profit. There are also many non-commercial applications that can use the technique for public benefit, for example where to locate new health services -->
 <!-- - The main task of location analysis is to find out where such ‘optimal locations’ are for specific services, based on available data. Typical research questions include: -->
@@ -529,12 +530,36 @@ knitr::include_graphics("figs/08_census_stack.png", dpi = NA)
 ---
 # Analiza geomarketingowa
 
-```{r, echo=FALSE, out.height=500}
+.pull-left[
+- Odpowiedź na takie pytania można uzyskać, na przykład, poprzez:
+    - Wyczyszczenie dostępnych danych ze spisu powszechnego
+    - Przetworzenie danych ze spisu do formy rastrowej
+    - Określenie obszarów metropolitalnych z dużym zagęszczeniem populacji
+    - Pobranie szczegółowych danych przestrzennych (np. z OpenStreetMap) dla tych obszarów
+    - Stworzenie rastrów oceniających względną atrakcyjność różnych lokalizacji
+]
+
+.pull-right[
+
+```{r, echo=FALSE, out.height=550}
 knitr::include_graphics("figs/08_metro_areas.png", dpi = NA)
 ```
+]
+<!-- This chapter demonstrates how geocomputation can answer such questions based on a hypothetical case study based on real data. -->
+
+
+<!-- -    Tidy the input data from the German census (section 13.3). -->
+<!-- -    Convert the tabulated census data into raster objects (section 13.4). -->
+<!-- -    Identify metropolitan areas with high population densities (section 13.5). -->
+<!-- -    Download detailed geographic data (from OpenStreetMap, with osmdata) for these areas (section 13.6). -->
+<!-- -    Create rasters for scoring the relative desirability of different locations using map algebra (section 13.7). -->
+
+
 
 ---
 # Analiza geomarketingowa
+
+Wybrane obszary zgodnie z hipotetycznym scenariuszem tworzenia sklepu rowerowego w Berlinie.
 
 ```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/08_result.png", dpi = NA)
@@ -543,9 +568,9 @@ knitr::include_graphics("figs/08_result.png", dpi = NA)
 ---
 # Analiza ekologiczna
 
-- Intro to lomas (photo?)
-- Intro the chapter 
-- Results
+- Lomas (inaczej zwane oazami mgły) to formacje roślinne rozwinięte w górskich obszarach wzdłuż przybrzeżnych pustyń Peru i Chile
+- Obszar ten ma bardzo niskie sumy roczne opadów (30-50 mm rocznie), ale osadzanie się mgły zwiększa znacząco ilość dostępnej dla roślin wody
+- Celem analizy ekologicznej jest określenie składu i rozmieszczenia roślin na południowym zboczy góry Lomas w Peru
 
 .pull-left[
 ```{r, echo=FALSE, out.height=400}
@@ -554,18 +579,29 @@ knitr::include_graphics("figs/eco1.png", dpi = NA)
 ]
 
 .pull-right[
-```{r, echo=FALSE, out.height=400}
+```{r, echo=FALSE, out.height=375}
 knitr::include_graphics("figs/eco2.png", dpi = NA)
 ```
 ]
+
+<!-- During a field study to Mt. Mongón we recorded all vascular plants living in 100 randomly sampled 4x4 m2 plots in the austral winter of 2011 -->
 
 
 ---
 # Analiza ekologiczna
 
-```{r, echo=FALSE, out.height=400}
+.pull-left[
+- Do wydobycia najważniejszych informacji z danych może posłużyć skalowanie wielowymiarowe - technika redukująca wymiary
+- Jest to popularne narzędzie w ekologii pozwalające na określenie głównych podobieństw i różnic pomiędzy badanymi obiektami, co często powiązane jest z gradientami ekologicznymi 
+- Następnie możliwe jest stworzenie modelu przestrzennego zmienności wegetacji w oparciu o dane wysokościowe, NDVI, powierzchnię i nachylenie zlewni z użyciem metody lasów losowych (ang. *random forest*)
+- Efekt: Mapa gradientu florystycznego dla badanego obszaru
+]
+
+.pull-right[
+```{r, echo=FALSE, out.height=550}
 knitr::include_graphics("figs/eco3.png", dpi = NA)
 ```
+]
 
 ---
 class: inverse, center, middle
@@ -574,61 +610,54 @@ class: inverse, center, middle
 ---
 # Rozwiązania zadań
 
-.lc[
+.pull-left[
 - Każdy z rozdziałów zawiera od kilku do kilkunastu zadań do wykonania
 - Ich rozwiązania można znaleźć w zakładce *vignettes and solutions* pod adresem https://geocompr.github.io
+- Tam też znajdują się artykuły rozszerzające opis metod i funkcji z niektórych rozdziałów oraz dodatkowe związane z analizą danych przestrzennych w R
 ]
 
-.rc[
+.pull-right[
 ```{r, echo=FALSE, out.height=500}
-knitr::include_graphics("figs/exer1.png", dpi = NA)
+knitr::include_graphics("figs/szczecin_flood.png", dpi = NA)
 ```
 ]
 
 ---
 # Tutoriale
 
-- https://geocompr.github.io/
+- Na stronie https://geocompr.github.io/ można też znaleźć szereg slajdów z warsztatów dotyczących przetwarzania i analizy danych przestrzennych w R
+
+```{r, echo=FALSE}
+knitr::include_graphics("figs/vector_both.png")
+```
 
 ---
-# Blogposty
+# Wpisy na blogu
 
-.lc[
+- Okazjonalnie też publikowane są wpisy na blogu https://nowosad.github.io/tags/geocompr/
+- Obejmują one popularne kwestie w badaniach przestrzennych i zawierają kod do otworzenia ich wyników
 
-]
-
-.rc[
-- https://nowosad.github.io/tags/geocompr/
 ```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/inset_map.png", dpi = NA)
 ```
-]
-
 
 ---
-# Blogposty
+# Wpisy na blogu
 
-- https://nowosad.github.io/tags/geocompr/
+- Okazjonalnie też publikowane są wpisy na blogu https://nowosad.github.io/tags/geocompr/
 
-```{r, echo=FALSE, out.height=500}
+```{r, echo=FALSE, out.height=520}
 knitr::include_graphics("figs/world_pop_1800_2100.gif", dpi = NA)
 ```
 
 ---
-# Blogposty
+# Wpisy na blogu
 
-- https://nowosad.github.io/tags/geocompr/
+- Okazjonalnie też publikowane są wpisy na blogu https://nowosad.github.io/tags/geocompr/
 
-.pull-left[
-```{r, echo=FALSE, out.height=500}
+```{r, echo=FALSE, out.height=520}
 knitr::include_graphics("figs/worlds_animate.gif", dpi = NA)
 ```
-]
-
-.pull-right[
-dsfds
-]
-
 
 ---
 class: inverse, center, middle
@@ -637,19 +666,25 @@ class: inverse, center, middle
 ---
 # Podsumowanie
 
-Where next?
-- R itself
-- discovering geocomputation with other languages
-- exploring and learning new research topics and methods
+.pull-left[
 
+Piętnaście rozdziałów od wprowadzenia do obiektów przestrzennych w R, poprzez podstawowe operacje przestrzenne, wizualizacje, łączenie z oprogramowaniem GIS, uczenie maszynowe, tworzenie funkcji przestrzennych, a skończywszy na przykładach zastosowania.
+]
 
-Encourage:
+.pull-right[
+Aktywne przeczytanie tej książki zachęca do:
 
--    The creative use of geographic data.
--    Application to real-world problems.
--    Building ‘scientific’ tools.
--    Reproducibility.
+- Kreatywnego wykorzystania danych przestrzennych
+- Zastosowania umiejętności do prawdziwych problemów
+- Tworzenia nowych narzędzi
+- Dbania o odtwarzalność wyników
 
+Co dalej?
+
+- Rozwijanie wiedzy na temat R
+- Odkrywanie przetwarzania danych przestrzennych w innych językach programowania
+- Eksplorowanie i uczenie się nowych technik i metod
+]
 
 ---
 class: center, middle
