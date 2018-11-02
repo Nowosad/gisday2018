@@ -24,7 +24,7 @@ knitr::opts_chunk$set(fig.align = "center")
 <!-- grass gis + arc + r -->
 
 ```{r gdsl, echo=FALSE, message=FALSE, results='asis'}
-d = readr::read_csv('"Caech","GIS (GUI)","R (CLI)"
+d = readr::read_csv('"Cecha","GIS (GUI)","R (CLI)"
 "Dyscyplina","Geografia","Statystyka, Informatyka"
 "Sposób interakcji","Graficzny interfejs użytkownika","Wiersz poleceń"
 "Odtwarzalność","Minimalna","Maksymalna"')
@@ -67,6 +67,7 @@ Pakiety R:
 - **gstat**, **mlr**, **CAST** - modelowanie danych przestrzennych
 - **rasterVis**, **tmap**, **ggplot** - wizualizacje statyczne
 - **leaflet**, **mapview**, **mapdeck** - wizualizacje interaktywne
+- wiele innych...
 
 Więcej na https://cran.r-project.org/web/views/Spatial.html.
 
@@ -74,15 +75,17 @@ Więcej na https://cran.r-project.org/web/views/Spatial.html.
 # Geocomputation with R - książka
 
 .lc[
-```{r, out.width=325, echo=FALSE}
+```{r, out.width=350, echo=FALSE}
 knitr::include_graphics("figs/bc.png")
 ```
 ]
 
 .rc[
-- Lovelace R., Nowosad J., Muenchow J. 2019, **Geocomputation with R**. CRC Press
-- Wersja online znajduje się pod adresem https://geocompr.robinlovelace.net/
-- Książka zostanie opublikowana w wydawnictwie CRC Press na początku 2019 roku (http://bit.ly/geocomp_with_r)
+> Lovelace R., Nowosad J., Muenchow J. 2019, **Geocomputation with R**. CRC Press
+
+- Wersja online, dostępna dla wszystkich, znajduje się pod adresem https://geocompr.robinlovelace.net/
+<!-- każdy może dodać/zmienić/zaproponować coś-->
+- Papierowa wersja książki zostanie opublikowana w wydawnictwie CRC Press na początku 2019 roku (http://bit.ly/geocomp_with_r)
 <br>
 
 
@@ -111,70 +114,117 @@ library(spData)
 ---
 # Dane wektorowe
 
-.pull-left[
-```{r}
-library(sf)
+```{r, echo=FALSE}
+library(spData)
 ```
-]
 
-
-.pull-right[
+.pull-left[
 ```{r, echo=FALSE, out.height=550}
 knitr::include_graphics("figs/sf-classes.png", dpi = NA)
 ```
 ]
 
 
+
+
+
+.pull-right[
+```{r}
+library(sf)
+head(seine)
+```
+- The geographic vector model is based on points located within a coordinate reference system (CRS). 
+- sf is a package providing a class system for geographic vector data. Not only does it supercede sp it also provides a consistent command-line interface to GEOS and GDAL, superceding rgeos and rgdal 
+- sf was largely supercedes the sp ecosystem, which comprises sp (E. Pebesma and Bivand 2018), rgdal for data read/write (Bivand, Keitt, and Rowlingson 2018) and rgeos for spatial operations (Bivand and Rundel 2018).
+
+    Fast reading and writing of data.
+    Enhanced plotting performance.
+    sf objects can be treated as data frames in most operations.
+    sf functions can be combined using %>% operator and works well with the tidyverse collection of R packages.
+    sf function names are relatively consistent and intuitive (all begin with st_).
+
+]
+
+
 ---
 # Dane rastrowe
 
+.lc[
+- This matrix representation avoids storing explicitly the coordinates for the four corner points (in fact it only stores one coordinate, namely the origin) of each cell corner as would be the case for rectangular vector polygons. 
+- The RasterLayer class represents the simplest form of a raster object, and consists of only one layer
+- Aside from RasterLayer, there are two additional classes: RasterBrick and RasterStack. Both can handle multiple layers, but differ regarding the number of supported file formats, type of internal representation and processing speed.
+]
+
+.rc[
+```{r, echo=FALSE, out.height=200}
+knitr::include_graphics("figs/raster-intro-plot-1.png", dpi = NA)
+```
+
 ```{r}
 library(raster)
+elev
 ```
-
-```{r, echo=FALSE}
-knitr::include_graphics("figs/raster-intro-plot-1.png")
-```
-
+]
 
 ---
 # Tworzenie map
 
-```{r, echo=FALSE, out.height=400}
+- Rozdział 8 - *Making maps with R* - https://geocompr.robinlovelace.net/adv-map.html
+- Rozpoczyna się on od wprowadzenia w gramatykę tworzenia map z pakietem **tmap**
+
+```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/tmshape-1.png", dpi = NA)
 ```
 
 ---
 # Tworzenie map
 
-```{r, echo=FALSE, out.height=400}
+- Obejmuje to, między innymi, dodawanie kolejnych wartw na mapie, zmianę stylu czy umieszczenie dodatkowych elementów (skala, strzałka północy)
+
+```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/break-styles-1.png", dpi = NA)
 ```
 
 ---
 # Tworzenie map
 
-```{r, echo=FALSE, out.height=400}
-knitr::include_graphics("figs/inset_map.png", dpi = NA)
+- Dodatkowo opisane jest tworzenie tzw. "inset maps"...
+
+```{r, echo=FALSE, out.height=500}
+knitr::include_graphics("figs/insetmap2-1.png", dpi = NA)
 ```
 
 ---
 # Tworzenie map
 
-```{r, echo=FALSE, out.height=400}
+- ... "facet maps" ...
+
+```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/urban-facet-1.png", dpi = NA)
 ```
 
 ---
 # Tworzenie map
 
-```{r, echo=FALSE, out.height=400}
+- ... kartogramów ...
+
+```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/cartogram1.png", dpi = NA)
 ```
 
 ---
 # Tworzenie map
 
+- ... czy animacji:
+
+```{r, echo=FALSE, out.height=500}
+knitr::include_graphics("figs/usa_anim.gif", dpi = NA)
+```
+
+---
+# Tworzenie map
+
+.pull-left[
 ```{r, echo=FALSE}
 library(leaflet)
 library(spData)
@@ -187,9 +237,28 @@ leaflet(data = cycle_hire) %>%
   setView(lng = -0.1, 51.5, zoom = 12) %>% 
   addMiniMap()
 ```
+]
+
+.pull-right[
+- Ten rozdział zawiera także informacje o tym jak tworzyć zarówno mapy interaktywne, jak i też bardziej złożone aplikacje mapowe
+
+```{r, echo=FALSE}
+knitr::include_graphics("figs/mapdeck-mini.png")
+```
+
+]
+
 
 ---
 # Operacje geometryczne
+
+- Analizy przestrzenne często wymagają modyfikacji geometrii danych
+- Dla danych wektorowych obejmuje to, między innymi:
+    - uproszczanie geometrii linii czy poligonów
+    - tworzenie buforów
+    - przycinanie danych przestrzennych
+    - łączenie danych przestrzennych
+    - zmiana typu danych przestrzennych
 
 ```{r, echo=FALSE}
 knitr::include_graphics("figs/us-simp-1.png")
@@ -198,26 +267,47 @@ knitr::include_graphics("figs/us-simp-1.png")
 ---
 # Operacje geometryczne
 
-```{r, echo=FALSE, out.height=400}
+- Dla danych wektorowych obejmuje to, między innymi:
+    - określanie centroidów
+
+```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/centr-1.png", dpi = NA)
 ```
 
 ---
 # Operacje geometryczne
 
-```{r, echo=FALSE, out.height=400}
+- Dla danych wektorowych obejmuje to, między innymi:
+    - transformacje afiniczne
+
+```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/affine-trans-1.png", dpi = NA)
 ```
 
 ---
 # Operacje geometryczne
 
-```{r, echo=FALSE, out.height=400}
+.lc[
+- Dla danych rastrowych obejmuje to, między innymi:
+    - zmianę zasięgu danych przestrzennych
+    - modyfikację punktu początkowego rastra
+    - agregację i dysagregację
+    - przepróbkowanie
+]
+
+.rc[
+```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/aggregate-example-1.png", dpi = NA)
 ```
+]
 
 ---
 # Operacje geometryczne
+
+- Operacja geometryczne mogą też obejmować interakcje pomiędzy wektorami i rastrami, poprzez np.:
+    - przycinanie czy maksowanie rastrów z użyciem danych wektorowych
+    - wydobywanie wartości z rastra na podstawie położenia danych wektorowych
+    - konwersję z rastra na wektor oraz z wektora na raster
 
 ```{r, echo=FALSE}
 knitr::include_graphics("figs/cropmask-1.png")
@@ -225,6 +315,18 @@ knitr::include_graphics("figs/cropmask-1.png")
 
 ---
 # Reprojekcje
+
+- Integralną częścią danych przestrzennych jest posiadanie układu współrzędnych
+- Rozdział 6 - *Reprojecting geographic data* - https://geocompr.robinlovelace.net/reproj-geo-data.html - skupia się na tej tematyce wskazując na to jakie problemy można napotkać używająć nieodpowiedni układ współrzędnych oraz w jaki sposób transformować dane z jednego układu współrzędnych na inny
+- Ten rozdział zawiera też porady kiedy konieczna jest zmiana układu współrzędnych oraz rekomendacje dotyczące wyboru odpowiedniego układu współrzędnych
+
+<!-- When deciding a custom CRS we recommend the following:27 -->
+
+<!--     A Lambert azimuthal equal-area (LAEA) projection for a custom local projection (set lon_0 and lat_0 to the center of the study area), which is an equal-area projection at all locations but distorts shapes beyond thousands of kilometres. -->
+<!--     Azimuthal equidistant (AEQD) projections for a specifically accurate straight-line distance between a point and the centre point of the local projection. -->
+<!--     Lambert conformal conic (LCC) projections for regions covering thousands of kilometres, with the cone set to keep distance and area properties reasonable between the secant lines. -->
+<!--     Stereographic (STERE) projections for polar regions, but taking care not to rely on area and distance calculations thousands of kilometres from the center. -->
+
 
 .pull-left[
 ```{r, echo=FALSE}
@@ -346,7 +448,10 @@ knitr::include_graphics("figs/lsl-susc-1.png")
 
 
 .rc[
-- TEXT
+- Statistical learning is concerned with the use of statistical and computational models for identifying patterns in data and predicting from these patterns.
+- Statistical learning combines methods from statistics and machine learning and its methods can be categorized into supervised and unsupervised techniques.
+- This chapter is based on a case study: the (spatial) prediction of landslides. 
+- The models’ predictive performance will be assessed using spatial cross-validation (CV), which accounts for the fact that geographic data is special.
 ]
 
 
@@ -355,8 +460,8 @@ knitr::include_graphics("figs/lsl-susc-1.png")
 ---
 # Tworzenie algorytmów przestrzennych
 
-- Skrypt, algorytm i funkcja
-- Na przykładzie znajdowania centroidu poligonu:
+- Wprowadzenie do tego czym jest skrypt, algorytm i funkcja
+- Wyjaśnienie ich tworzenia na przykładzie znajdowania centroidu poligonu:
     1. Podziel poligon na sąsiadujące trójkąty
     2. Znajdź środek każdego trojkąta
     3. Określ obszar każdego trójkąta
@@ -471,7 +576,7 @@ class: inverse, center, middle
 
 .lc[
 - Każdy z rozdziałów zawiera od kilku do kilkunastu zadań do wykonania
-- Ich rozwiązania można znaleźć pod adresem https://geocompr.github.io/geocompkg/articles/
+- Ich rozwiązania można znaleźć w zakładce *vignettes and solutions* pod adresem https://geocompr.github.io
 ]
 
 .rc[
@@ -489,10 +594,11 @@ knitr::include_graphics("figs/exer1.png", dpi = NA)
 # Blogposty
 
 .lc[
-- https://nowosad.github.io/tags/geocompr/
+
 ]
 
 .rc[
+- https://nowosad.github.io/tags/geocompr/
 ```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/inset_map.png", dpi = NA)
 ```
