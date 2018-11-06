@@ -669,7 +669,13 @@ class: inverse, center, middle
 .pull-left[
 
 Piętnaście rozdziałów od wprowadzenia do obiektów przestrzennych w R, poprzez podstawowe operacje przestrzenne, wizualizacje, łączenie z oprogramowaniem GIS, uczenie maszynowe, tworzenie funkcji przestrzennych, a skończywszy na przykładach zastosowania.
+
+```{r, echo=FALSE, out.height=375}
+knitr::include_graphics("figs/authors-in-czech-republic.jpg", dpi = NA)
+```
 ]
+
+
 
 .pull-right[
 Aktywne przeczytanie tej książki zachęca do:
