@@ -24,15 +24,18 @@ knitr::opts_chunk$set(fig.align = "center")
 <!-- grass gis + arc + r -->
 .pull-left[
 
+- Automatyzacja często powtarzalnych czynności
+- Przejrzystość i powtarzalność
+- Inspiracja do tworzenia oprogramowania poprzez dostarczanie narzędzi do modyfikowania istniejących i wdrażania nowych funkcji
+- Zachęcenie do dzielenia kodu i wyników oraz współpracy
+- Pomoc w rozwijaniu umiejętności programowania, na które istnieje duże zapotrzebowanie
+
 ```{r gdsl, echo=FALSE, message=FALSE, results='asis'}
 d = readr::read_csv('"Cecha","GIS (GUI)","R (CLI)"
 "Dyscyplina","Geografia","Statystyka, Informatyka"
 "Sposób interakcji","Graficzny interfejs użytkownika","Wiersz poleceń"
 "Odtwarzalność","Minimalna","Maksymalna"')
 knitr::kable(x = d, 
-             caption = paste("Różnice pomiędzy oprogramowaniem - graficzny",
-                             "interfejs użytkownika (GUI) w programach GIS",
-                             "oraz wiersz poleceń (CLI) w R"),
              booktabs = TRUE, 
              format = "html")
 ```
@@ -111,11 +114,9 @@ class: inverse, center, middle
 <!-- - R + RStudio -->
 <!-- - Simple workflow - gif? -->
 
-```{r}
-library(sf)
-library(spData)
+```{r, echo=FALSE, out.width="90%"}
+knitr::include_graphics("figs/geocompr.gif")
 ```
-
 
 ---
 # Dane wektorowe
@@ -131,11 +132,8 @@ knitr::include_graphics("figs/sf-classes.png", dpi = NA)
 ]
 
 
-
-
-
 .pull-right[
-```{r}
+```{r, message=FALSE}
 library(sf)
 head(seine)
 ```
@@ -207,7 +205,7 @@ knitr::include_graphics("figs/urban-facet-1.png", dpi = NA)
 ---
 # Tworzenie map
 
-- ... kartogramów ...
+- ... "cartogram maps" ...
 
 ```{r, echo=FALSE, out.height=500}
 knitr::include_graphics("figs/cartogram1.png", dpi = NA)
@@ -452,8 +450,6 @@ knitr::include_graphics("figs/lsl-map-1.png")
 knitr::include_graphics("figs/lsl-susc-1.png")
 ```
 ]
-
-
 
 ---
 # Tworzenie funkcji przestrzennych
