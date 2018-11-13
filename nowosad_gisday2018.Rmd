@@ -22,6 +22,7 @@ knitr::opts_chunk$set(fig.align = "center")
 # Geocomputation
 
 <!-- grass gis + arc + r -->
+.pull-left[
 
 ```{r gdsl, echo=FALSE, message=FALSE, results='asis'}
 d = readr::read_csv('"Cecha","GIS (GUI)","R (CLI)"
@@ -36,6 +37,7 @@ knitr::kable(x = d,
              format = "html")
 ```
 
+]
 <!-- how and why -->
 <!-- packages and posibilities -->
 <!-- Facilitates the automation of repetitive tasks. -->
@@ -50,8 +52,11 @@ knitr::kable(x = d,
  <!--    Open source software, which can be inspected and potentially improved by anyone in the world. -->
  <!--    An active developer community, which collaborates and self-organizes to build complimentary and modular tools. -->
 
-
-
+.pull-right[
+```{r, echo=FALSE, out.width="90%"}
+knitr::include_graphics(c("figs/qgis.png", "figs/r.png"))
+```
+]
 
 ---
 # Gecomputation with R
@@ -156,7 +161,7 @@ head(seine)
 knitr::include_graphics("figs/raster-intro-plot-1.png", dpi = NA)
 ```
 
-```{r}
+```{r, message=FALSE}
 library(raster)
 elev
 ```
@@ -668,7 +673,7 @@ class: inverse, center, middle
 
 .pull-left[
 
-Piętnaście rozdziałów od wprowadzenia do obiektów przestrzennych w R, poprzez podstawowe operacje przestrzenne, wizualizacje, łączenie z oprogramowaniem GIS, uczenie maszynowe, tworzenie funkcji przestrzennych, a skończywszy na przykładach zastosowania.
+**Piętnaście rozdziałów** od wprowadzenia do obiektów przestrzennych w R, poprzez podstawowe operacje przestrzenne, wizualizacje, łączenie z oprogramowaniem GIS, uczenie maszynowe, tworzenie funkcji przestrzennych, a skończywszy na przykładach zastosowania.
 
 ```{r, echo=FALSE, out.height=375}
 knitr::include_graphics("figs/authors-in-czech-republic.jpg", dpi = NA)
@@ -678,14 +683,14 @@ knitr::include_graphics("figs/authors-in-czech-republic.jpg", dpi = NA)
 
 
 .pull-right[
-Aktywne przeczytanie tej książki zachęca do:
+**Aktywne przeczytanie tej książki zachęca do:**
 
 - Kreatywnego wykorzystania danych przestrzennych
 - Zastosowania umiejętności do prawdziwych problemów
 - Tworzenia nowych narzędzi
 - Dbania o odtwarzalność wyników
 
-Co dalej?
+**Co dalej?**
 
 - Rozwijanie wiedzy na temat R
 - Odkrywanie przetwarzania danych przestrzennych w innych językach programowania
